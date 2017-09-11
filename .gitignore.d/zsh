@@ -7,6 +7,11 @@
 !/.gitignore.d
 !/.gitignore.d/zsh
 !/.zplug/init.zsh
+!/.config/
+!/.config/mr/
+!/.config/mr/config.d/
+!/.config/mr/config.d/zplug.git
+!/.config/mr/config.d/zsh.vcsh
 !/.zsh/
 !/.zsh/*
 !/.zsh/*/*
