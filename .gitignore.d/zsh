@@ -1,0 +1,14 @@
+*
+!/.z*
+/.zsh_cache
+/.zhistory
+/.*.zwc
+/.zcompdump
+!/.gitignore.d
+!/.gitignore.d/zsh
+!/.zplug/init.zsh
+!/.zsh/
+!/.zsh/*
+!/.zsh/*/*
+!/.zsh/*/*/*
+!/.zsh/*/*/*/*

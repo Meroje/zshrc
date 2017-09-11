@@ -1,0 +1,1 @@
+/Users/jforay/.zplug/repos/zplug/zplug/init.zsh
