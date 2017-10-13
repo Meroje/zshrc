@@ -73,7 +73,10 @@ zplug "zsh-users/zsh-syntax-highlighting", defer:2
 zplug "~/.zsh", from:local
 
 # Load theme file
-zplug 'bhilburn/powerlevel9k', as:theme
+#zplug 'bhilburn/powerlevel9k', as:theme
+zplug 'dritter/powerlevel9k', \
+    at:async_all_the_segments, \
+    as:theme
 
 # Install plugins if there are plugins that have not been installed
 if ! zplug check --verbose; then
