@@ -1,5 +1,5 @@
 # Linux shim
-XDG_CONFIG_HOME="$HOME/.config"
+export XDG_CONFIG_HOME="$HOME/.config"
 
 #
 # Locale
@@ -17,6 +17,13 @@ export GIT_EDITOR="${EDITOR}"
 export VISUAL='subl -w'
 export PAGER='less'
 
+
+#
+# Golang
+#
+export GOPATH=$HOME/go
+export GOROOT=/usr/local/opt/go/libexec
+
 #
 # Paths
 #
@@ -30,15 +37,30 @@ cdpath=(
   $cdpath
 )
 
+# Bring in the default PATH from /etc/paths /etc/paths.d
+eval `/usr/libexec/path_helper -s`
+
 # Set the list of directories that Zsh searches for programs.
 path=(
   "$HOME/bin"
   "$HOME/.composer/vendor/bin"
-  /usr/local/opt/go/libexec/bin
-  "/Library/Internet Plug-Ins/JavaAppletPlugin.plugin/Contents/Home/bin/"
+  "$HOME/.cargo/vendor/bin"
+  "$GOPATH/bin" "$GOROOT/bin"
+  "$(/usr/libexec/java_home)"
   /usr/local/{bin,sbin}
   $path
 )
+
+manpath=(
+  $HOME/man
+  /usr/local/share/man # Homebrew
+  /usr/local/opt/erlang/lib/erlang/man # erlang
+  /opt/X11/share/man
+  $manpath # Other setup files
+  $(/bin/cat /etc/manpaths) # Default manpaths - not loaded by default
+)
+# ZSH doesn't do this automatically, it does fill from $manpath though
+export MANPATH
 
 #
 # Temporary Files
@@ -48,7 +70,7 @@ if [[ ! -d "$TMPDIR" ]]; then
   export TMPDIR="$(mktemp -d)"
 fi
 
-TMPPREFIX="${TMPDIR%/}/zsh"
+export TMPPREFIX="${TMPDIR%/}/zsh"
 
 # tie DYLD_LIBRARY_PATH to the array ldpath
 export -TU DYLD_LIBRARY_PATH ldpath
@@ -57,12 +79,15 @@ export -TU GEM_PATH gem_path
 
 # Uncomment the following line to use hyphen-insensitive completion. Case
 # sensitive completion must be off. _ and - will be interchangeable.
-HYPHEN_INSENSITIVE="true"
+export HYPHEN_INSENSITIVE="true"
 
 # Uncomment the following line to display red dots whilst waiting for completion.
-COMPLETION_WAITING_DOTS="true"
+export COMPLETION_WAITING_DOTS="true"
 
 # Set NVM_DIR to home instead of brew prefixed path
-NVM_DIR="${HOME}/.nvm"
+export NVM_DIR="${HOME}/.nvm"
 
-FZF_DEFAULT_COMMAND='rg --files --no-ignore --hidden --follow --glob "!.git/*"'
+export FZF_DEFAULT_COMMAND='rg --files --no-ignore --hidden --follow --glob "!.git/*"'
+
+# Output timing info for slow commands
+export REPORTTIME=5
