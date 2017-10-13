@@ -19,5 +19,9 @@ if (( $+commands[thefuck] )); then
   eval $(thefuck -a)
 fi
 
+if (( $+commands[pipenv] )); then
+  eval $(env _PIPENV_COMPLETE=source-zsh pipenv)
+fi
+
 # Source module files.
 source "${0:h}/alias.zsh"
