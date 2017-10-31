@@ -1,1 +1,1 @@
-/Users/jforay/.zplug/repos/zplug/zplug/init.zsh
+repos/zplug/zplug/init.zsh
