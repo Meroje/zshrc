@@ -1,0 +1,2 @@
+[$HOME/.config/vcsh/repo.d/zshrc.git]
+checkout = vcsh clone git@github.com:Meroje/dotfiles/zshrc.git
