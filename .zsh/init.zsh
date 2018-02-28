@@ -1,8 +1,8 @@
 #!/usr/bin/env zsh
 
 fpath=(
-"${${(%):-%N}:A:h}"/autoload(N-/)
-$fpath
+  "${${(%):-%N}:A:h}"/autoload(N-/)
+  $fpath
 )
 autoload -Uz zsh_plugin
 setopt promptsubst
@@ -23,5 +23,16 @@ if (( $+commands[pipenv] )); then
   eval $(env _PIPENV_COMPLETE=source-zsh pipenv)
 fi
 
-# Source module files.
-source "${0:h}/alias.zsh"
+if (( $+commands[hub] )); then
+  eval "$(hub alias -s)"
+fi
+
+if [[ -d "/usr/local/Caskroom/google-cloud-sdk/latest/google-cloud-sdk" ]]; then
+  source '/usr/local/Caskroom/google-cloud-sdk/latest/google-cloud-sdk/path.zsh.inc'
+  source '/usr/local/Caskroom/google-cloud-sdk/latest/google-cloud-sdk/completion.zsh.inc'
+fi
+
+alias ssh='ssh -A -Y -C'
+alias sf='php -d memory_limit=-1 bin/console'
+alias gs='git status'
+

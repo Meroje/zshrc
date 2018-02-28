@@ -45,6 +45,9 @@ path=(
   "$HOME/bin"
   "$HOME/.composer/vendor/bin"
   "$HOME/.cargo/vendor/bin"
+  "$HOME/.cabal/bin"
+  "$HOME/.cargo/bin"
+  "$HOME/.jsvu"
   "$GOPATH/bin" "$GOROOT/bin"
   "$(/usr/libexec/java_home)"
   /usr/local/{bin,sbin}

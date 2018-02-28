@@ -90,8 +90,8 @@ fi
 zplug load #--verbose
 
 path=(
-${ZPLUG_BIN:+"$ZPLUG_BIN"}
-"$path[@]"
+  ${ZPLUG_BIN:+"$ZPLUG_BIN"}
+  "$path[@]"
 )
 
 POWERLEVEL9K_MODE='nerdfont-complete'

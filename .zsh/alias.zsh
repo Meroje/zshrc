@@ -1,7 +1,0 @@
-alias ssh='ssh -A -Y -C'
-
-alias sf='php -d memory_limit=-1 bin/console'
-
-alias gs='git status'
-
-eval "$(hub alias -s)"
