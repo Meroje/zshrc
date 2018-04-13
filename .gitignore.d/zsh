@@ -17,3 +17,5 @@
 !/.zsh/*/*
 !/.zsh/*/*/*
 !/.zsh/*/*/*/*
+!/bin/
+!/bin/zcompile-mine
