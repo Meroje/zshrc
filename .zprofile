@@ -89,6 +89,11 @@ export COMPLETION_WAITING_DOTS="true"
 
 # Set NVM_DIR to home instead of brew prefixed path
 export NVM_DIR="${HOME}/.nvm"
+export NVM_LAZY_LOAD="true"
+
+# Rbenv
+export DISABLE_AUTO_UPDATE="true"
+export RBENV_LAZY_LOAD="true"
 
 # FZF
 export FZF_DEFAULT_COMMAND='rg --files --no-ignore --hidden --follow --glob "!.git/*"'
