@@ -106,3 +106,6 @@ export FZF_DEFAULT_OPTS='
 
 # Output timing info for slow commands
 export REPORTTIME=5
+
+# Update homebrew every 24h
+export HOMEBREW_AUTO_UPDATE_SECS="86400"
