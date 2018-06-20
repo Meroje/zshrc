@@ -1,2 +1,8 @@
 [$HOME/.config/vcsh/repo.d/zshrc.git]
 checkout = vcsh clone git@github.com:Meroje/dotfiles/zshrc.git
+order = 10
+
+[$HOME/.zplug/repos]
+checkout = zsh -c 'source ~/.zshrc && zplug install'
+update = zsh -c 'source ~/.zshrc && zplug update'
+order = 20
