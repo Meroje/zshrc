@@ -7,6 +7,6 @@ checkout = git clone 'https://github.com/zplug/zplug' 'zplug'
 order = 20
 
 [$HOME/.zplug/repos]
-checkout = zsh -c 'source ~/.zshrc && zplug install'
-update = zsh -c 'source ~/.zshrc && zplug update'
+checkout = zsh -c 'source ~/.zplug/init.zsh && zplug install'
+update = zsh -c 'source ~/.zplug/init.zsh && zplug update'
 order = 30
