@@ -38,7 +38,7 @@ cdpath=(
 )
 
 # Bring in the default PATH from /etc/paths /etc/paths.d
-eval `/usr/libexec/path_helper -s`
+[[ -x /usr/libexec/path_helper ]] && eval $(/usr/libexec/path_helper -s)
 
 # Set the list of directories that Zsh searches for programs.
 path=(
@@ -60,7 +60,7 @@ manpath=(
   /usr/local/opt/erlang/lib/erlang/man # erlang
   /opt/X11/share/man
   $manpath # Other setup files
-  $(/bin/cat /etc/manpaths) # Default manpaths - not loaded by default
+  $([[ -r /etc/manpaths ]] && /bin/cat /etc/manpaths) # Default manpaths - not loaded by default
 )
 # ZSH doesn't do this automatically, it does fill from $manpath though
 export MANPATH
