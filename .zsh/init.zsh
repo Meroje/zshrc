@@ -37,4 +37,7 @@ fi
 alias ssh='ssh -A -Y -C'
 alias sf='php -C -d date.timezone=UTC -d memory_limit=-1 bin/console'
 alias gs='git status'
-
+alias gp='git push'
+alias gpf='git push --force-with-lease'
+alias gpc='git push --set-upstream origin "$(git-branch-current 2> /dev/null)"'
+alias gcf='git commit --amend --reuse-message HEAD'

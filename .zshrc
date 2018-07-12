@@ -43,6 +43,8 @@ if ! zplug check --verbose; then
     fi
 fi
 
+zstyle ':prezto:module:git:alias' skip 'yes'
+
 # Then, source plugins and add commands to $PATH
 zplug load #--verbose
 
