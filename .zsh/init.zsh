@@ -1,11 +1,19 @@
 #!/usr/bin/env zsh
 
+source "${${(%):-%N}:A:h}"/cloud_functions.zsh
+
 fpath=(
   "${${(%):-%N}:A:h}"/autoload(N-/)
   $fpath
 )
-autoload -Uz zsh_plugin
-setopt promptsubst
+
+autoload -Uz cloud-env
+function _cloud-env {
+  reply=(sandbox datasandbox dev stg prod svc root video clean)
+}
+compctl -K _cloud-env cloud-env
+
+setopt promptsubst complete_aliases
 
 unalias run-help 2>/dev/null
 autoload run-help
@@ -29,6 +37,10 @@ if (( $+commands[hub] )); then
   eval "$(hub alias -s)"
 fi
 
+if (( $+commands[helm] )); then
+  source <(helm completion zsh)
+fi
+
 if [[ -d "/usr/local/Caskroom/google-cloud-sdk/latest/google-cloud-sdk" ]]; then
   source '/usr/local/Caskroom/google-cloud-sdk/latest/google-cloud-sdk/path.zsh.inc'
   source '/usr/local/Caskroom/google-cloud-sdk/latest/google-cloud-sdk/completion.zsh.inc'
@@ -41,3 +53,4 @@ alias gp='git push'
 alias gpf='git push --force-with-lease'
 alias gpc='git push --set-upstream origin "$(git-branch-current 2> /dev/null)"'
 alias gcf='git commit --amend --reuse-message HEAD'
+compdef _git gs=git gp=git gpf=git gpc=git gcf=git

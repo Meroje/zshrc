@@ -109,3 +109,6 @@ export REPORTTIME=5
 
 # Update homebrew every 24h
 export HOMEBREW_AUTO_UPDATE_SECS="86400"
+
+# AWS assumed roles
+export AWS_SDK_LOAD_CONFIG=true

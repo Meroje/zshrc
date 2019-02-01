@@ -10,8 +10,6 @@
 !/.zplug/init.zsh
 !/.zprofile
 !/.zsh
-!/.zsh/autoload
-!/.zsh/autoload/zsh_plugin
 !/.zsh/bin
 !/.zsh/bin/zsh_plugin
 !/.zsh/doc
