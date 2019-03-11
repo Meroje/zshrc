@@ -19,6 +19,7 @@ zplug "modules/python", from:prezto
 zplug "modules/utility", from:prezto
 
 #zplug "plugins/terraform", from:oh-my-zsh, if:"[[ $(command -v terraform) ]]"
+zplug "johanhaleby/kubetail", if:"[[ $(command -v kubectl) ]]"
 
 zplug "Meroje/zsh-nvm"
 zplug "Meroje/zsh-rbenv"
