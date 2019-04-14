@@ -49,7 +49,7 @@ path=(
   "$HOME/.cargo/bin"
   "$HOME/.jsvu"
   "$GOPATH/bin" "$GOROOT/bin"
-  "$([[ -x /usr/libexec/java_home ]] && /usr/libexec/java_home)"
+  "$([[ -x /usr/libexec/java_home ]] && /usr/libexec/java_home -F 2>/dev/null)"
   /usr/local/{bin,sbin}
   $path
 )

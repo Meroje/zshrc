@@ -1,0 +1,34 @@
+# vi: ft=zsh
+
+source ~/.zplugin/bin/zplugin.zsh
+
+zplugin ice from"gh-r" as"program"; zplugin load junegunn/fzf-bin
+
+zplugin light zsh-users/zsh-autosuggestions
+zplugin light zdharma/fast-syntax-highlighting
+zplugin load zdharma/history-search-multi-word
+
+zplugin snippet PZT::modules/completion/init.zsh
+zplugin snippet PZT::modules/directory/init.zsh
+zplugin snippet PZT::modules/editor/init.zsh
+zplugin snippet PZT::modules/environment/init.zsh
+zplugin ice svn; zplugin snippet PZT::modules/git
+zplugin snippet PZT::modules/history/init.zsh
+zplugin snippet PZT::modules/python/init.zsh
+zplugin snippet PZT::modules/utility/init.zsh
+
+zplugin ice svn if'[[ -n "$commands[terraform]" ]]'; zplugin snippet OMZ::plugins/terraform
+zplugin ice if'[[ -n "$commands[kubectl]" ]]'; zplugin load johanhaleby/kubetail
+
+zplugin load Meroje/zsh-nvm
+zplugin ice as"completion" mv"bash_completion -> _nvm"; zplugin snippet https://github.com/creationix/nvm/blob/master/bash_completion
+zplugin load Meroje/zsh-rbenv
+
+zplugin load $HOME/.zsh/init.zsh
+
+zplugin ice cloneopts"-b async_all_the_segments"; zplugin light dritter/powerlevel9k
+# zplugin light romkatv/powerlevel10k
+
+autoload -Uz compinit
+compinit
+zplugin cdreplay -q

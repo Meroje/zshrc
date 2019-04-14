@@ -17,7 +17,7 @@ setopt promptsubst complete_aliases
 
 unalias run-help 2>/dev/null
 autoload run-help
-if (( $+commands[brew] )) && [[ -d "/usr/local/opt/zsh" ]]; then
+if [[ -d "/usr/local/opt/zsh" ]]; then
   HELPDIR="/usr/local/opt/zsh/share/zsh/help"
 elif (( $+commands[brew] )) && [[ -d "$(brew --prefix zsh 2>/dev/null)" ]]; then
   HELPDIR="$(brew --prefix zsh)/share/zsh/help"
