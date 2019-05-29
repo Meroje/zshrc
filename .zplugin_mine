@@ -24,7 +24,7 @@ zplugin load Meroje/zsh-nvm
 zplugin ice as"completion" mv"bash_completion -> _nvm"; zplugin snippet https://github.com/creationix/nvm/blob/master/bash_completion
 zplugin load Meroje/zsh-rbenv
 
-zplugin load $HOME/.zsh/init.zsh
+zplugin load _local/mine
 
 zplugin ice cloneopts"-b async_all_the_segments"; zplugin light dritter/powerlevel9k
 # zplugin light romkatv/powerlevel10k

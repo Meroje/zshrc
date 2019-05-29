@@ -1,17 +1,9 @@
 #!/usr/bin/env zsh
 
-source "${${(%):-%N}:A:h}"/cloud_functions.zsh
-
 fpath=(
   "${${(%):-%N}:A:h}"/autoload(N-/)
   $fpath
 )
-
-autoload -Uz cloud-env
-function _cloud-env {
-  reply=(sandbox datasandbox dev stg prod svc root video clean)
-}
-compctl -K _cloud-env cloud-env
 
 setopt promptsubst complete_aliases
 
@@ -38,7 +30,11 @@ if (( $+commands[hub] )); then
 fi
 
 if (( $+commands[helm] )); then
-  source <(helm completion zsh)
+  source <(\helm completion zsh)
+fi
+
+if (( $+commands[kops] )); then
+  source <(\kops completion zsh)
 fi
 
 if [[ -d "/usr/local/Caskroom/google-cloud-sdk/latest/google-cloud-sdk" ]]; then

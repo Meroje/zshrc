@@ -31,7 +31,7 @@ if [[ $(whence -w prompt_powerlevel9k_setup) =~ "function" ]]; then
   POWERLEVEL9K_MULTILINE_FIRST_PROMPT_PREFIX=""
   POWERLEVEL9K_MULTILINE_SECOND_PROMPT_PREFIX=""
   POWERLEVEL9K_LEFT_PROMPT_ELEMENTS=(status root_indicator dir dir_writable_joined)
-  POWERLEVEL9K_RIGHT_PROMPT_ELEMENTS=(vcs background_jobs_joined aws kube) # nvm rbenv)
+  POWERLEVEL9K_RIGHT_PROMPT_ELEMENTS=(vcs background_jobs_joined terraform aws kube) # nvm rbenv)
 
   # AWS Profile
   # Parameters:
@@ -67,11 +67,30 @@ if [[ $(whence -w prompt_powerlevel9k_setup) =~ "function" ]]; then
     local fg=${DEFAULT_COLOR}
 
     case "${context}" in
-      *prod) bg="red" ;;
-      *staging) bg="022"; fg=${DEFAULT_COLOR_INVERTED} ;;
+      *prod*) bg="red" ;;
+      *staging*) bg="022"; fg=${DEFAULT_COLOR_INVERTED} ;;
     esac
 
     serialize_segment "$0" "" "$1" "$2" "${3}" "${bg}" "${fg}" "${context}${namespace}" "K8S_ICON"
+  }
+
+  # Terraform workspace
+  # Parameters:
+  #   * $1 Alignment: string - left|right
+  #   * $2 Index: integer
+  #   * $3 Joined: bool - If the segment should be joined
+  prompt_terraform() {
+    local profile="$(cat .terraform/environment 2>/dev/null || echo '')"
+
+    local bg="green"
+    local fg=${DEFAULT_COLOR}
+
+    case "${profile}" in
+      *prod*) bg="red" ;;
+      *staging*) bg="022"; fg=${DEFAULT_COLOR_INVERTED} ;;
+    esac
+
+    serialize_segment "$0" "" "$1" "$2" "${3}" "${bg}" "${fg}" "${profile}" "TERRAFORM_ICON"
   }
 fi
 
@@ -80,3 +99,4 @@ export FZF_DEFAULT_COMMAND='rg --files --no-ignore --hidden --follow -g "!{.git,
 export FZF_ALT_C_COMMAND="cd ~/; bfs -type d -nohidden | sed s/^\./~/"
 export FZF_CTRL_T_COMMAND="$FZF_DEFAULT_COMMAND"
 # bind -x '"\C-p": vim $(fzf);'
+#
