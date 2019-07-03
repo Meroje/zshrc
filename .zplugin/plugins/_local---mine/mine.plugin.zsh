@@ -1,9 +1,14 @@
 #!/usr/bin/env zsh
 
-fpath=(
-  "${${(%):-%N}:A:h}"/autoload(N-/)
-  $fpath
-)
+0="${${ZERO:-${0:#$ZSH_ARGZERO}}:-${(%):-%N}}"
+local _fpth="${0:h}"/autoload(N-/)
+
+if [[ -z "${fpath[(r)$_fpth]}" ]]; then
+    path+=( "$_fpth" )
+fi
+
+ZSH_AUTOSUGGEST_USE_ASYNC=true
+ZSH_AUTOSUGGEST_BUFFER_MAX_SIZE=50
 
 setopt promptsubst complete_aliases
 
