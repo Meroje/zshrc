@@ -1,12 +1,14 @@
 # vi: ft=zsh
 
-source ~/.zplugin/bin/zplugin.zsh
+source "$HOME/.zplugin/bin/zplugin.zsh"
+
+### ZSH Module
+  if [[ -s "$HOME/.zplugin/bin/zmodules/Src/zdharma/zplugin.so" ]]; then
+    module_path+=( "$HOME/.zplugin/bin/zmodules/Src" )
+    zmodload zdharma/zplugin
+fi
 
 zplugin ice from"gh-r" as"program"; zplugin load junegunn/fzf-bin
-
-zplugin light zsh-users/zsh-autosuggestions
-zplugin light zdharma/fast-syntax-highlighting
-zplugin load zdharma/history-search-multi-word
 
 zplugin snippet PZT::modules/completion/init.zsh
 zplugin snippet PZT::modules/directory/init.zsh
@@ -17,17 +19,32 @@ zplugin snippet PZT::modules/history/init.zsh
 zplugin snippet PZT::modules/python/init.zsh
 zplugin snippet PZT::modules/utility/init.zsh
 
+zplugin ice from"gh" wait'0' lucid as"program" pick"bin/git-dsf"
+zplugin load zdharma/zsh-diff-so-fancy
+
 zplugin ice svn if'[[ -n "$commands[terraform]" ]]'; zplugin snippet OMZ::plugins/terraform
 zplugin ice if'[[ -n "$commands[kubectl]" ]]'; zplugin load johanhaleby/kubetail
 
-zplugin load Meroje/zsh-nvm
-zplugin ice as"completion" mv"bash_completion -> _nvm"; zplugin snippet https://github.com/creationix/nvm/blob/master/bash_completion
-zplugin load Meroje/zsh-rbenv
+zplugin ice from"gh" wait'1' lucid
+zplugin load romkatv/gitstatus
+
+#zplugin load Meroje/zsh-nvm
+#zplugin ice as"completion" mv"bash_completion -> _nvm"; zplugin snippet https://github.com/creationix/nvm/blob/master/bash_completion
+#zplugin load Meroje/zsh-rbenv
 
 zplugin load _local/mine
 
-zplugin ice cloneopts"-b async_all_the_segments"; zplugin light dritter/powerlevel9k
-# zplugin light romkatv/powerlevel10k
+#zplugin ice cloneopts"-b async_all_the_segments"; zplugin light dritter/powerlevel9k
+zplugin light romkatv/powerlevel10k
+
+zplugin ice from"gh" atload'zpcompinit; zpcdreplay' wait'1' lucid
+zplugin light zsh-users/zsh-autosuggestions
+
+zplugin ice from"gh" atload'zpcompinit; zpcdreplay' wait'1' lucid
+zplugin light zdharma/fast-syntax-highlighting
+
+zplugin ice from"gh" wait'0' lucid
+zplugin load zdharma/history-search-multi-word
 
 autoload -Uz compinit
 compinit
