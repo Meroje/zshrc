@@ -22,7 +22,12 @@ if (( $+commands[thefuck] )); then
 fi
 
 if (( $+commands[pipenv] )); then
-  eval $(env _PIPENV_COMPLETE=source-zsh pipenv)
+#  eval $(env _PIPENV_COMPLETE=source-zsh pipenv)
+  autoload -U compinit
+  _pipenv() {
+    eval $(env COMMANDLINE="${words[1,$CURRENT]}" _PIPENV_COMPLETE=complete-zsh  pipenv)
+  }
+  compdef _pipenv pipenv
 fi
 
 if (( $+commands[hub] )); then
@@ -38,8 +43,8 @@ if (( $+commands[kops] )); then
 fi
 
 if [[ -d "/usr/local/Caskroom/google-cloud-sdk/latest/google-cloud-sdk" ]]; then
-  source '/usr/local/Caskroom/google-cloud-sdk/latest/google-cloud-sdk/path.zsh.inc'
-  source '/usr/local/Caskroom/google-cloud-sdk/latest/google-cloud-sdk/completion.zsh.inc'
+#  source '/usr/local/Caskroom/google-cloud-sdk/latest/google-cloud-sdk/path.zsh.inc'
+#  source '/usr/local/Caskroom/google-cloud-sdk/latest/google-cloud-sdk/completion.zsh.inc'
 fi
 
 alias ssh='ssh -A -Y -C'
