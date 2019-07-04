@@ -10,6 +10,11 @@ fi
 ZSH_AUTOSUGGEST_USE_ASYNC=true
 ZSH_AUTOSUGGEST_BUFFER_MAX_SIZE=50
 
+autoload -Uz _cloud-env _helm _kops
+compctl -K _cloud-env cloud-env
+compctl -K _kops kops
+compctl -K _helm helm
+
 setopt promptsubst complete_aliases
 
 unalias run-help 2>/dev/null
@@ -22,10 +27,6 @@ else
   HELPDIR="/usr/share/zsh/5.2/help"
 fi
 
-if (( $+commands[thefuck] )); then
-  eval $(thefuck -a)
-fi
-
 if (( $+commands[pipenv] )); then
 #  eval $(env _PIPENV_COMPLETE=source-zsh pipenv)
   autoload -U compinit
@@ -36,15 +37,8 @@ if (( $+commands[pipenv] )); then
 fi
 
 if (( $+commands[hub] )); then
-  eval "$(hub alias -s)"
-fi
-
-if (( $+commands[helm] )); then
-  source <(\helm completion zsh)
-fi
-
-if (( $+commands[kops] )); then
-  source <(\kops completion zsh)
+  # eval "$(hub alias -s)"
+  alias git=hub
 fi
 
 if [[ -d "/usr/local/Caskroom/google-cloud-sdk/latest/google-cloud-sdk" ]]; then

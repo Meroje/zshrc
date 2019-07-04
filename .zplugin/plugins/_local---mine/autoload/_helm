@@ -2043,3 +2043,4 @@ fi
 BASH_COMPLETION_EOF
 }
 __helm_bash_source <(__helm_convert_bash_to_zsh)
+_complete helm 2>/dev/null

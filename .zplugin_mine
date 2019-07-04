@@ -1,17 +1,36 @@
-# vi: ft=zsh
+# -*- mode: shell-script -*-
+# vim:ft=zsh
+
+_zpcompinit_fast() {
+  setopt extendedglob local_options
+  autoload -Uz compinit
+  local zcd=${ZDOTDIR:-$HOME}/.zcompdump
+  local zcdc="$zcd.zwc"
+  # Compile the completion dump to increase startup speed, if dump is newer or doesn't exist,
+  # in the background as this is doesn't affect the current session
+  if [[ -f "$zcd"(#qN.m+1) ]]; then
+        compinit -i -d "$zcd"
+        { rm -f "$zcdc" && zcompile "$zcd" } &!
+  else
+        compinit -C -d "$zcd"
+        { [[ ! -f "$zcdc" || "$zcd" -nt "$zcdc" ]] && rm -f "$zcdc" && zcompile "$zcd" } &!
+  fi
+}
+
 
 source "$HOME/.zplugin/bin/zplugin.zsh"
 autoload -Uz _zplugin
 (( ${+_comps} )) && _comps[zplugin]=_zplugin
 
 ### ZSH Module
-  if [[ -s "$HOME/.zplugin/bin/zmodules/Src/zdharma/zplugin.so" ]]; then
-    module_path+=( "$HOME/.zplugin/bin/zmodules/Src" )
-    zmodload zdharma/zplugin
+if [[ -s "$HOME/.zplugin/bin/zmodules/Src/zdharma/zplugin.so" ]]; then
+  module_path+=( "$HOME/.zplugin/bin/zmodules/Src" )
+  zmodload zdharma/zplugin
 fi
 
-zplugin ice from"gh-r" as"program"; zplugin load junegunn/fzf-bin
-zplugin ice wait"0" lucid multisrc"shell/{completion,key-bindings}.zsh" id-as"junegunn/fzf_completions" pick"/dev/null"
+zplugin ice from"gh-r" as"program"
+zplugin load junegunn/fzf-bin
+zplugin ice wait"0" silent trackbinds multisrc"shell/{completion,key-bindings}.zsh" id-as"junegunn/fzf_completions"
 zplugin load junegunn/fzf
 
 zplugin snippet PZT::modules/completion/init.zsh
@@ -26,16 +45,17 @@ zplugin snippet PZT::modules/utility/init.zsh
 zplugin ice wait"0" lucid
 zplugin light ael-code/zsh-colored-man-pages
 
-zplugin ice wait'0' has'thefuck' trackbinds bindmap'\e\e -> ^[OP^[OP' pick'init.zsh' atload'zstyle ":prezto:runcom" zpreztorc "$HOME/.zshrc"'
+zplugin ice wait'0' has'thefuck' lucid trackbinds bindmap'\e\e -> ^[OP^[OP' pick'init.zsh' atload'zstyle ":prezto:runcom" zpreztorc "$HOME/.zshrc"'
 zplugin load laggardkernel/zsh-thefuck
 
 zplugin ice has'git' wait'0' lucid as"program" pick"bin/git-dsf"; zplugin load zdharma/zsh-diff-so-fancy
 
-zplugin ice svn has'terraform'; zplugin snippet OMZ::plugins/terraform
-zplugin ice has'kubectl'; zplugin load johanhaleby/kubetail
-zplugin ice has'docker-compose' as"completion"; zplugin snippet https://github.com/docker/compose/blob/master/contrib/completion/zsh/_docker-compose
+zplugin ice wait'0' lucid svn has'terraform'; zplugin snippet OMZ::plugins/terraform
+zplugin ice wait'0' lucid has'kubectl'; zplugin load johanhaleby/kubetail
+zplugin ice wait'0' lucid has'docker-compose' as"completion"; zplugin snippet https://github.com/docker/compose/blob/master/contrib/completion/zsh/_docker-compose
 
-zplugin ice wait'1' lucid; zplugin load romkatv/gitstatus
+zplugin ice wait'1' lucid
+zplugin load romkatv/gitstatus
 
 #zplugin load Meroje/zsh-nvm
 #zplugin ice as"completion" mv"bash_completion -> _nvm"; zplugin snippet https://github.com/creationix/nvm/blob/master/bash_completion
@@ -43,7 +63,6 @@ zplugin ice wait'1' lucid; zplugin load romkatv/gitstatus
 
 zplugin load _local/mine
 
-#zplugin ice cloneopts"-b async_all_the_segments"; zplugin light dritter/powerlevel9k
 zplugin light romkatv/powerlevel10k
 
 zplugin ice wait'0' lucid blockf atpull'zplugin creinstall -q .'

@@ -1,0 +1,5 @@
+#compdef git-flow
+
+reply=(sandbox datasandbox dev stg prod svc root video clean)
+
+# vim: ft=zsh sw=2 ts=2 et

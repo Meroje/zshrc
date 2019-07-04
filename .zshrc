@@ -1,6 +1,5 @@
 #!/usr/bin/env zsh
 
-#source ~/.zplug_mine
 source ~/.zplugin_mine
 
 if [[ $(whence -w prompt_powerlevel9k_setup) =~ "function" ]]; then

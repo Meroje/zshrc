@@ -53,6 +53,7 @@ path=(
   "$HOME/.jsvu"
   "$GOPATH/bin" "$GOROOT/bin"
   "$([[ -x /usr/libexec/java_home ]] && /usr/libexec/java_home -F 2>/dev/null)"
+# "$(gem env gemdir)/bin"
   /usr/local/{bin,sbin}
   $path
 )
