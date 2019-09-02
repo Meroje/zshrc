@@ -33,8 +33,25 @@ if [[ $(whence -w prompt_powerlevel9k_setup) =~ "function" ]]; then
   POWERLEVEL9K_KUBECONTEXT_PROD_FOREGROUND=black
   POWERLEVEL9K_KUBECONTEXT_PROD_BACKGROUND=red
   POWERLEVEL9K_KUBECONTEXT_STAGING_BACKGROUND='022'
+  POWERLEVEL9K_KUBECONTEXT_STAGING_FOREGROUND='white'
   POWERLEVEL9K_KUBECONTEXT_OTHER_FOREGROUND=black
   POWERLEVEL9K_KUBECONTEXT_OTHER_BACKGROUND=green
+
+  POWERLEVEL9K_TERRAFORM_CLASSES=("${POWERLEVEL9K_KUBECONTEXT_CLASSES[@]}")
+  POWERLEVEL9K_TERRAFORM_PROD_FOREGROUND="$POWERLEVEL9K_KUBECONTEXT_PROD_FOREGROUND"
+  POWERLEVEL9K_TERRAFORM_PROD_BACKGROUND="$POWERLEVEL9K_KUBECONTEXT_PROD_BACKGROUND"
+  POWERLEVEL9K_TERRAFORM_STAGING_BACKGROUND="$POWERLEVEL9K_KUBECONTEXT_STAGING_BACKGROUND"
+  POWERLEVEL9K_TERRAFORM_STAGING_FOREGROUND="$POWERLEVEL9K_KUBECONTEXT_STAGING_FOREGROUND"
+  POWERLEVEL9K_TERRAFORM_OTHER_FOREGROUND="$POWERLEVEL9K_KUBECONTEXT_OTHER_FOREGROUND"
+  POWERLEVEL9K_TERRAFORM_OTHER_BACKGROUND="$POWERLEVEL9K_KUBECONTEXT_OTHER_BACKGROUND"
+
+  POWERLEVEL9K_AWS_CLASSES=("${POWERLEVEL9K_KUBECONTEXT_CLASSES[@]}")
+  POWERLEVEL9K_AWS_PROD_FOREGROUND="$POWERLEVEL9K_KUBECONTEXT_PROD_FOREGROUND"
+  POWERLEVEL9K_AWS_PROD_BACKGROUND="$POWERLEVEL9K_KUBECONTEXT_PROD_BACKGROUND"
+  POWERLEVEL9K_AWS_STAGING_BACKGROUND="$POWERLEVEL9K_KUBECONTEXT_STAGING_BACKGROUND"
+  POWERLEVEL9K_AWS_STAGING_FOREGROUND="$POWERLEVEL9K_KUBECONTEXT_STAGING_FOREGROUND"
+  POWERLEVEL9K_AWS_OTHER_FOREGROUND="$POWERLEVEL9K_KUBECONTEXT_OTHER_FOREGROUND"
+  POWERLEVEL9K_AWS_OTHER_BACKGROUND="$POWERLEVEL9K_KUBECONTEXT_OTHER_BACKGROUND"
   # POWERLEVEL9K_VCS_UNTRACKED_ICON="$(print_icon VCS_UNSTAGED_ICON)"
   # POWERLEVEL9K_VCS_INCOMING_CHANGES_ICON="$(print_icon VCS_INCOMING_CHANGES_ICON)"
   # POWERLEVEL9K_VCS_OUTGOING_CHANGES_ICON="$(print_icon VCS_OUTGOING_CHANGES_ICON)"
@@ -43,48 +60,38 @@ if [[ $(whence -w prompt_powerlevel9k_setup) =~ "function" ]]; then
   POWERLEVEL9K_LEFT_PROMPT_ELEMENTS=(status root_indicator dir dir_writable_joined)
   POWERLEVEL9K_RIGHT_PROMPT_ELEMENTS=(vcs background_jobs_joined terraform aws kubecontext) # nvm rbenv)
 
-  # AWS Profile
-  # Parameters:
-  #   * $1 Alignment: string - left|right
-  #   * $2 Index: integer
-  #   * $3 Joined: bool - If the segment should be joined
   prompt_aws() {
-    local aws_profile=${AWS_DEFAULT_PROFILE:-$AWS_PROFILE}
-
-    local bg="green"
-    local fg=${DEFAULT_COLOR}
-
-    case "${aws_profile}" in
-      *prod) bg="red" ;;
-      *staging) bg="022"; fg=${DEFAULT_COLOR_INVERTED} ;;
-    esac
-
-    #serialize_segment "$0" "" "$1" "$2" "${3}" "${bg}" "${fg}" "${profile}" "AWS_ICON"
-    if [[ -n $aws_profile ]]; then
-      "$1_prompt_segment" "$0" "$2" "${bg}" "${fg}" 'AWS_ICON' 0 '' "${aws_profile//\%/%%}"
+    local aws_profile="${AWS_PROFILE:-$AWS_DEFAULT_PROFILE}"
+    if [[ -n "$aws_profile" ]]; then
+      local pat class
+      for pat class in "${POWERLEVEL9K_AWS_CLASSES[@]}"; do
+        if [[ $aws_profile == ${~pat} ]]; then
+          [[ -n $class ]] && state=_${(U)class}
+          break
+        fi
+      done
+      _p9k_prompt_segment "$0$state" red white AWS_ICON 0 '' "${aws_profile//\%/%%}"
     fi
   }
 
-  # Terraform workspace
-  # Parameters:
-  #   * $1 Alignment: string - left|right
-  #   * $2 Index: integer
-  #   * $3 Joined: bool - If the segment should be joined
-  prompt_terraform() {
-    local profile="$(cat .terraform/environment 2>/dev/null || echo '')"
-
-    local bg="green"
-    local fg=${DEFAULT_COLOR}
-
-    case "${profile}" in
-      *prod*) bg="red" ;;
-      *staging*) bg="022"; fg=${DEFAULT_COLOR_INVERTED} ;;
-    esac
-
-    #serialize_segment "$0" "" "$1" "$2" "${3}" "${bg}" "${fg}" "${profile}" "TERRAFORM_ICON"
-    if [[ -n $profile ]]; then
-      "$1_prompt_segment" "$0" "$2" "${bg}" "${fg}" 'TERRAFORM_ICON' 0 '' "${profile//\%/%%}"
+  function prompt_terraform() {
+    (( $+commands[terraform] )) || return
+    local ws=default
+    if [[ -n $TF_WORKSPACE ]]; then
+      ws=$TF_WORKSPACE
+    else
+      local f=${TF_DATA_DIR:-.terraform}/environment
+      [[ -r $f ]] && _p9k_read_file $f && ws=$_p9k_ret
     fi
+    ws=${${ws##[[:space:]]#}%%[[:space:]]#}
+    local pat class
+    for pat class in "${POWERLEVEL9K_TERRAFORM_CLASSES[@]}"; do
+      if [[ $ws == ${~pat} ]]; then
+        [[ -n $class ]] && state=_${(U)class}
+        break
+      fi
+    done
+    [[ $ws == default ]] || _p9k_prompt_segment "$0$state" $_p9k_color1 blue TERRAFORM_ICON 0 '' $ws
   }
 fi
 
