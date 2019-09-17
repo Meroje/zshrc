@@ -70,6 +70,7 @@ zplugin light zsh-users/zsh-completions
 
 zplugin ice wait'1' lucid compile'{src/*.zsh,src/strategies/*}' atload'_zsh_autosuggest_start'
 zplugin light zsh-users/zsh-autosuggestions
+export ZSH_AUTOSUGGEST_USE_ASYNC=true
 
 zplugin ice atinit'_zpcompinit_fast; zpcdreplay' wait'1' lucid
 zplugin light zdharma/fast-syntax-highlighting
