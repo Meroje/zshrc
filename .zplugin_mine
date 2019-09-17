@@ -63,6 +63,7 @@ zplugin load romkatv/gitstatus
 
 zplugin load _local/mine
 
+zplugin ice nocompletions
 zplugin light romkatv/powerlevel10k
 
 zplugin ice wait'0' lucid blockf atpull'zplugin creinstall -q .'
