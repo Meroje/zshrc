@@ -4,7 +4,7 @@
 local _fpth="${0:h}"/autoload(N-/)
 
 if [[ -z "${fpath[(r)$_fpth]}" ]]; then
-    path+=( "$_fpth" )
+    fpath+=( "$_fpth" )
 fi
 
 ZSH_AUTOSUGGEST_USE_ASYNC=true
