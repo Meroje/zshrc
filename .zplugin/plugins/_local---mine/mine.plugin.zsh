@@ -54,3 +54,8 @@ alias gpf='git push --force-with-lease'
 alias gpc='git push --set-upstream origin "$(git-branch-current 2> /dev/null)"'
 alias gcf='git commit --amend --reuse-message HEAD'
 compdef _git gs=git gp=git gpf=git gpc=git gcf=git
+
+alias rsync-copy="rsync -avz --info=progress2 -h"
+alias rsync-move="rsync -avz --info=progress2 -h --remove-source-files"
+alias rsync-synchronize="rsync -avzu --delete --info=progress2 -h"
+alias rsync-update="rsync -avzu --info=progress2 -h"
