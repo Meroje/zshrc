@@ -28,8 +28,9 @@ if [[ -s "$HOME/.zplugin/bin/zmodules/Src/zdharma/zplugin.so" ]]; then
   zmodload zdharma/zplugin
 fi
 
-zplugin ice from"gh-r" as"program"
-zplugin load junegunn/fzf-bin
+zplugin light zplugin/z-a-bin-gem-node
+
+zplugin ice from"gh-r" fbin"fzf"; zplugin load junegunn/fzf-bin
 zplugin ice wait"0" silent trackbinds multisrc"shell/{completion,key-bindings}.zsh" id-as"junegunn/fzf_completions"
 zplugin load junegunn/fzf
 
@@ -48,18 +49,22 @@ zplugin light ael-code/zsh-colored-man-pages
 zplugin ice wait'0' has'thefuck' lucid trackbinds bindmap'\e\e -> ^[OP^[OP' pick'init.zsh' atload'zstyle ":prezto:runcom" zpreztorc "$HOME/.zshrc"'
 zplugin load laggardkernel/zsh-thefuck
 
-zplugin ice has'git' wait'0' lucid as"program" pick"bin/git-dsf"; zplugin load zdharma/zsh-diff-so-fancy
+zplugin ice has'git' wait'0' lucid fbin"bin/git-dsf"; zplugin load zdharma/zsh-diff-so-fancy
 
 zplugin ice wait'0' lucid svn has'terraform'; zplugin snippet OMZ::plugins/terraform
-zplugin ice wait'0' lucid has'kubectl'; zplugin load johanhaleby/kubetail
 zplugin ice wait'0' lucid has'docker-compose' as"completion"; zplugin snippet https://github.com/docker/compose/blob/master/contrib/completion/zsh/_docker-compose
 
 zplugin ice wait'1' lucid
 zplugin load romkatv/gitstatus
 
-#zplugin load Meroje/zsh-nvm
-#zplugin ice as"completion" mv"bash_completion -> _nvm"; zplugin snippet https://github.com/creationix/nvm/blob/master/bash_completion
-#zplugin load Meroje/zsh-rbenv
+zplugin ice wait'1' lucid
+zplugin load hlissner/zsh-autopair
+
+zplugin ice wait'2' lucid
+zplugin load lukechilds/zsh-nvm
+export NVM_NO_USE=true NVM_LAZY_LOAD=true
+zplugin ice wait'2' lucid
+zplugin load lukechilds/zsh-better-npm-completion
 
 zplugin load _local/mine
 
