@@ -1,6 +1,7 @@
 # Linux shim
 export XDG_CONFIG_HOME="${XDG_CONFIG_HOME:-$HOME/.config}"
 export XDG_DATA_HOME="${XDG_DATA_HOME:-$HOME/.local/share}"
+export XDG_CACHE_HOME="${XDG_CACHE_HOME:-$HOME/.cache}"
 
 #
 # Locale
@@ -12,7 +13,6 @@ export LC_ALL=en_US.UTF-8
 #
 # Editors
 #
-
 export EDITOR='vim'
 export GIT_EDITOR="${EDITOR}"
 export VISUAL='subl -w'
@@ -48,6 +48,7 @@ cdpath=(
 path=(
   "$HOME/bin"
   "$HOME/.composer/vendor/bin"
+  "$HOME/.config/composer/vendor/bin"
   "$HOME/.cargo/vendor/bin"
   "$HOME/.cabal/bin"
   "$HOME/.cargo/bin"
@@ -93,6 +94,7 @@ export HYPHEN_INSENSITIVE="true"
 export COMPLETION_WAITING_DOTS="true"
 
 # Set NVM_DIR to home instead of brew prefixed path
+export NVM_NO_USE=true
 export NVM_DIR="${HOME}/.nvm"
 export NVM_LAZY_LOAD="true"
 
@@ -117,3 +119,11 @@ export HOMEBREW_AUTO_UPDATE_SECS="86400"
 
 # AWS assumed roles
 export AWS_SDK_LOAD_CONFIG=true
+
+# colored ls on macOS
+export CLICOLOR=true
+
+# autosuggestions
+#export ZSH_AUTOSUGGEST_STRATEGY=(completion match_prev_cmd history)
+export ZSH_AUTOSUGGEST_USE_ASYNC=true
+export ZSH_AUTOSUGGEST_MANUAL_REBIND=true

@@ -5,15 +5,11 @@
 !/.config/mr/config.d/zshrc.vcsh
 !/.gitignore.d
 !/.gitignore.d/zshrc
+!/.p10k.zsh
 !/.zplugin
 !/.zplugin/plugins
 !/.zplugin/plugins/_local---mine
-!/.zplugin/plugins/_local---mine/autoload
-!/.zplugin/plugins/_local---mine/autoload/_cloud-env
-!/.zplugin/plugins/_local---mine/autoload/_helm
-!/.zplugin/plugins/_local---mine/autoload/_kops
 !/.zplugin/plugins/_local---mine/mine.plugin.zsh
-!/.zplugin_mine
 !/.zprofile
 !/.zshenv
 !/.zshrc

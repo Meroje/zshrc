@@ -1,103 +1,65 @@
-#!/usr/bin/env zsh
+# -*- mode: shell-script -*-
+# vim:ft=zsh
 
-source ~/.zplugin_mine
+source "$HOME/.zplugin/bin/zplugin.zsh"
+autoload -Uz _zplugin
+(( ${+_comps} )) && _comps[zplugin]=_zplugin
 
-if [[ $(whence -w prompt_powerlevel9k_setup) =~ "function" ]]; then
-  POWERLEVEL9K_MODE='nerdfont-complete'
-  POWERLEVEL9K_PROMPT_ON_NEWLINE=true
-  POWERLEVEL9K_MULTILINE_LAST_PROMPT_PREFIX=''
-  POWERLEVEL9K_PROMPT_ADD_NEWLINE=true
-  POWERLEVEL9K_SHORTEN_STRATEGY="truncate_middle"
-  POWERLEVEL9K_STATUS_VERBOSE=false
-  POWERLEVEL9K_NODE_VERSION_BACKGROUND='022'
-  POWERLEVEL9K_VCS_CLEAN_FOREGROUND='black'
-  POWERLEVEL9K_VCS_CLEAN_BACKGROUND='green'
-  POWERLEVEL9K_VCS_UNTRACKED_FOREGROUND='black'
-  POWERLEVEL9K_VCS_UNTRACKED_BACKGROUND='yellow'
-  POWERLEVEL9K_VCS_MODIFIED_FOREGROUND='white'
-  POWERLEVEL9K_VCS_MODIFIED_BACKGROUND='black'
-  POWERLEVEL9K_COMMAND_EXECUTION_TIME_BACKGROUND='black'
-  POWERLEVEL9K_COMMAND_EXECUTION_TIME_FOREGROUND='blue'
-  # POWERLEVEL9K_FOLDER_ICON="$(print_icon FOLDER_ICON)"
-  POWERLEVEL9K_STATUS_OK_IN_NON_VERBOSE=true
-  POWERLEVEL9K_STATUS_VERBOSE=false
-  POWERLEVEL9K_COMMAND_EXECUTION_TIME_THRESHOLD=3
-  POWERLEVEL9K_VCS_UNSTAGED_ICON='\u00b1'
-  POWERLEVEL9K_VCS_COMMIT_ICON='\uf417'
-  # POWERLEVEL9K_K8S_ICON="\u2388"
-  POWERLEVEL9K_KUBECONTEXT_SHOW_DEFAULT_NAMESPACE=false
-  POWERLEVEL9K_KUBECONTEXT_CLASSES=(
-    '*prod*'    prod
-    '*staging*' staging
-    '*'         other)
-  POWERLEVEL9K_KUBECONTEXT_PROD_FOREGROUND=black
-  POWERLEVEL9K_KUBECONTEXT_PROD_BACKGROUND=red
-  POWERLEVEL9K_KUBECONTEXT_STAGING_BACKGROUND='022'
-  POWERLEVEL9K_KUBECONTEXT_STAGING_FOREGROUND='white'
-  POWERLEVEL9K_KUBECONTEXT_OTHER_FOREGROUND=black
-  POWERLEVEL9K_KUBECONTEXT_OTHER_BACKGROUND=green
-
-  POWERLEVEL9K_TERRAFORM_CLASSES=("${POWERLEVEL9K_KUBECONTEXT_CLASSES[@]}")
-  POWERLEVEL9K_TERRAFORM_PROD_FOREGROUND="$POWERLEVEL9K_KUBECONTEXT_PROD_FOREGROUND"
-  POWERLEVEL9K_TERRAFORM_PROD_BACKGROUND="$POWERLEVEL9K_KUBECONTEXT_PROD_BACKGROUND"
-  POWERLEVEL9K_TERRAFORM_STAGING_BACKGROUND="$POWERLEVEL9K_KUBECONTEXT_STAGING_BACKGROUND"
-  POWERLEVEL9K_TERRAFORM_STAGING_FOREGROUND="$POWERLEVEL9K_KUBECONTEXT_STAGING_FOREGROUND"
-  POWERLEVEL9K_TERRAFORM_OTHER_FOREGROUND="$POWERLEVEL9K_KUBECONTEXT_OTHER_FOREGROUND"
-  POWERLEVEL9K_TERRAFORM_OTHER_BACKGROUND="$POWERLEVEL9K_KUBECONTEXT_OTHER_BACKGROUND"
-
-  POWERLEVEL9K_AWS_CLASSES=("${POWERLEVEL9K_KUBECONTEXT_CLASSES[@]}")
-  POWERLEVEL9K_AWS_PROD_FOREGROUND="$POWERLEVEL9K_KUBECONTEXT_PROD_FOREGROUND"
-  POWERLEVEL9K_AWS_PROD_BACKGROUND="$POWERLEVEL9K_KUBECONTEXT_PROD_BACKGROUND"
-  POWERLEVEL9K_AWS_STAGING_BACKGROUND="$POWERLEVEL9K_KUBECONTEXT_STAGING_BACKGROUND"
-  POWERLEVEL9K_AWS_STAGING_FOREGROUND="$POWERLEVEL9K_KUBECONTEXT_STAGING_FOREGROUND"
-  POWERLEVEL9K_AWS_OTHER_FOREGROUND="$POWERLEVEL9K_KUBECONTEXT_OTHER_FOREGROUND"
-  POWERLEVEL9K_AWS_OTHER_BACKGROUND="$POWERLEVEL9K_KUBECONTEXT_OTHER_BACKGROUND"
-  # POWERLEVEL9K_VCS_UNTRACKED_ICON="$(print_icon VCS_UNSTAGED_ICON)"
-  # POWERLEVEL9K_VCS_INCOMING_CHANGES_ICON="$(print_icon VCS_INCOMING_CHANGES_ICON)"
-  # POWERLEVEL9K_VCS_OUTGOING_CHANGES_ICON="$(print_icon VCS_OUTGOING_CHANGES_ICON)"
-  POWERLEVEL9K_MULTILINE_FIRST_PROMPT_PREFIX=""
-  POWERLEVEL9K_MULTILINE_SECOND_PROMPT_PREFIX=""
-  POWERLEVEL9K_LEFT_PROMPT_ELEMENTS=(status root_indicator dir dir_writable_joined)
-  POWERLEVEL9K_RIGHT_PROMPT_ELEMENTS=(vcs background_jobs_joined terraform aws kubecontext) # nvm rbenv)
-
-  prompt_aws() {
-    local aws_profile="${AWS_PROFILE:-$AWS_DEFAULT_PROFILE}"
-    if [[ -n "$aws_profile" ]]; then
-      local pat class
-      for pat class in "${POWERLEVEL9K_AWS_CLASSES[@]}"; do
-        if [[ $aws_profile == ${~pat} ]]; then
-          [[ -n $class ]] && state=_${(U)class}
-          break
-        fi
-      done
-      _p9k_prompt_segment "$0$state" red white AWS_ICON 0 '' "${aws_profile//\%/%%}"
-    fi
-  }
-
-  function prompt_terraform() {
-    (( $+commands[terraform] )) || return
-    local ws=default
-    if [[ -n $TF_WORKSPACE ]]; then
-      ws=$TF_WORKSPACE
-    else
-      local f=${TF_DATA_DIR:-.terraform}/environment
-      [[ -r $f ]] && _p9k_read_file $f && ws=$_p9k_ret
-    fi
-    ws=${${ws##[[:space:]]#}%%[[:space:]]#}
-    local pat class
-    for pat class in "${POWERLEVEL9K_TERRAFORM_CLASSES[@]}"; do
-      if [[ $ws == ${~pat} ]]; then
-        [[ -n $class ]] && state=_${(U)class}
-        break
-      fi
-    done
-    [[ $ws == default ]] || _p9k_prompt_segment "$0$state" $_p9k_color1 blue TERRAFORM_ICON 0 '' $ws
-  }
+### ZSH Module
+if [[ -s "$HOME/.zplugin/bin/zmodules/Src/zdharma/zplugin.so" ]]; then
+  module_path+=( "$HOME/.zplugin/bin/zmodules/Src" )
+  zmodload zdharma/zplugin
 fi
 
-#[ -f ~/.fzf.zsh ] && source ~/.fzf.zsh
-export FZF_DEFAULT_COMMAND='rg --files --no-ignore --hidden --follow -g "!{.git,node_modules}/*" 2> /dev/null'
-export FZF_ALT_C_COMMAND="cd ~/; bfs -type d -nohidden | sed s/^\./~/"
-export FZF_CTRL_T_COMMAND="$FZF_DEFAULT_COMMAND"
-# bind -x '"\C-p": vim $(fzf);'
-#
+zplugin load zplugin/z-a-bin-gem-node
+
+zplugin ice from"gh-r" fbin"fzf"; zplugin load junegunn/fzf-bin
+zplugin ice wait"0" silent trackbinds multisrc"shell/{completion,key-bindings}.zsh" id-as"junegunn/fzf_completions"
+zplugin load junegunn/fzf
+
+zplugin ice svn atpull'zplugin creinstall -q .'; zplugin snippet PZT::modules/git
+zplugin snippet PZT::modules/completion/init.zsh
+zplugin snippet PZT::modules/directory/init.zsh
+zplugin snippet PZT::modules/editor/init.zsh
+zplugin snippet PZT::modules/environment/init.zsh
+zplugin snippet PZT::modules/history/init.zsh
+zplugin snippet PZT::modules/python/init.zsh
+zplugin snippet PZT::modules/utility/init.zsh
+
+zplugin ice wait"0" lucid
+zplugin load ael-code/zsh-colored-man-pages
+
+zplugin ice wait'1' has'thefuck' lucid aliases trackbinds atload'zstyle ":prezto:runcom" zpreztorc "$HOME/.zshrc"'
+zplugin load laggardkernel/zsh-thefuck
+
+zplugin ice has'git' wait'1' lucid fbin"bin/git-dsf"; zplugin load zdharma/zsh-diff-so-fancy
+zplugin ice has'git' wait'1' lucid; zplugin load wfxr/forgit
+zplugin ice has'git' wait'1' lucid; zplugin load romkatv/gitstatus
+
+zplugin ice wait'0' lucid svn has'terraform' as"completion" atpull'zplugin creinstall -q .'; zplugin snippet OMZ::plugins/terraform
+zplugin ice wait'0' lucid has'docker' as"completion" atpull'zplugin creinstall -q .'; zplugin snippet https://github.com/docker/cli/blob/master/contrib/completion/zsh/_docker
+zplugin ice wait'0' lucid has'docker-compose' as"completion" atpull'zplugin creinstall -q .'; zplugin snippet https://github.com/docker/compose/blob/master/contrib/completion/zsh/_docker-compose
+zplugin ice wait'0' lucid blockf if'[[ -d /usr/local/Caskroom/google-cloud-sdk/latest/google-cloud-sdk ]]'; zplugin snippet /usr/local/Caskroom/google-cloud-sdk/latest/google-cloud-sdk/completion.zsh.inc
+zplugin ice wait'0' lucid if'[[ "$OSTYPE" = *darwin* ]]' atload'!iterm2_precmd'; zplugin snippet https://iterm2.com/shell_integration/zsh
+
+zplugin ice wait'1' lucid; zplugin load hlissner/zsh-autopair
+
+zplugin ice wait'1' lucid; zplugin load lukechilds/zsh-nvm
+zplugin ice wait'1' lucid; zplugin load lukechilds/zsh-better-npm-completion
+
+zplugin ice aliases blockf; zplugin load _local/mine
+
+zplugin ice wait'!' nocd atload'!source ~/.p10k.zsh; _p9k_precmd' lucid
+zplugin load romkatv/powerlevel10k
+
+zplugin ice wait'0' lucid blockf atpull'zplugin creinstall -q .' lucid
+zplugin load zsh-users/zsh-completions
+
+zplugin ice wait'1' lucid compile'{src/*.zsh,src/strategies/*}' atload'!_zsh_autosuggest_start' lucid
+zplugin load zsh-users/zsh-autosuggestions
+
+zplugin ice atinit'zpcompinit; zpcdreplay' wait'1c' lucid
+zplugin load zdharma/fast-syntax-highlighting
+
+zplugin ice wait'0' lucid
+zplugin load zdharma/history-search-multi-word
