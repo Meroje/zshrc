@@ -63,3 +63,7 @@ zplugin load zdharma/fast-syntax-highlighting
 
 zplugin ice wait'0' lucid
 zplugin load zdharma/history-search-multi-word
+
+if [[ -r "$HOME/.zshrc.local" ]]; then
+  source "$HOME/.zshrc.local"
+fi
