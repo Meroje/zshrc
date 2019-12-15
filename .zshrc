@@ -50,7 +50,7 @@ zplugin ice wait'1' lucid; zplugin load lukechilds/zsh-better-npm-completion
 zplugin ice aliases blockf; zplugin load _local/mine
 
 zplugin ice wait'!' nocd atload'!source ~/.p10k.zsh; _p9k_precmd' lucid
-zplugin load romkatv/powerlevel10k
+zplugin load Meroje/powerlevel10k
 
 zplugin ice wait'0' lucid blockf atpull'zplugin creinstall -q .' lucid
 zplugin load zsh-users/zsh-completions
