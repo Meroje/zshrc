@@ -43,3 +43,7 @@ fi
 if [ $+commands[helm] ]; then
   source <(helm completion zsh)
 fi
+if [ $+commands[vault] ]; then
+  autoload -U +X bashcompinit && bashcompinit
+  complete -o nospace -C /usr/local/bin/vault vault
+fi

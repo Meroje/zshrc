@@ -2,15 +2,6 @@
 checkout = vcsh clone git@github.com:Meroje/dotfiles/zshrc.git
 order = 10
 
-#[$HOME/.zplug/repos/zplug/zplug]
-#checkout = git clone 'https://github.com/zplug/zplug' 'zplug'
-#order = 20
-#
-#[$HOME/.zplug/repos]
-#checkout = zsh -c 'source ~/.zplug/init.zsh && zplug install'
-#update = zsh -c 'source ~/.zplug/init.zsh && zplug update'
-#order = 30
-
-[$HOME/.zplugin/bin]
-checkout = git clone 'https://github.com/zdharma/zplugin.git' 'bin'
+[$HOME/.zinit/bin]
+checkout = git clone 'https://github.com/zdharma/zinit.git' 'bin'
 order = 20
