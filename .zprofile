@@ -47,6 +47,7 @@ cdpath=(
 # Set the list of directories that Zsh searches for programs.
 path=(
   "$HOME/bin"
+  "${KREW_ROOT:-$HOME/.krew}/bin"
   "$HOME/.composer/vendor/bin"
   "$HOME/.config/composer/vendor/bin"
   "$HOME/.cargo/vendor/bin"

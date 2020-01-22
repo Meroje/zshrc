@@ -24,7 +24,7 @@
   typeset -g POWERLEVEL9K_MODE='nerdfont-complete'
   typeset -g POWERLEVEL9K_PROMPT_ON_NEWLINE=true
   typeset -g POWERLEVEL9K_MULTILINE_LAST_PROMPT_PREFIX=''
-  typeset -g POWERLEVEL9K_PROMPT_ADD_NEWLINE=true
+  typeset -g POWERLEVEL9K_PROMPT_ADD_NEWLINE=false
   typeset -g POWERLEVEL9K_SHORTEN_STRATEGY="truncate_middle"
   typeset -g POWERLEVEL9K_STATUS_VERBOSE=false
   typeset -g POWERLEVEL9K_NODE_VERSION_BACKGROUND='022'
@@ -84,7 +84,7 @@
   typeset -g POWERLEVEL9K_LEFT_PROMPT_ELEMENTS=(status root_indicator dir dir_writable_joined)
   typeset -g POWERLEVEL9K_RIGHT_PROMPT_ELEMENTS=(vcs background_jobs_joined terraform aws kubecontext) # nvm rbenv)
 
-  typeset -g POWERLEVEL9K_TRANSIENT_PROMPT=off
+  typeset -g POWERLEVEL9K_TRANSIENT_PROMPT=always
   typeset -g POWERLEVEL9K_INSTANT_PROMPT=verbose
   typeset -g POWERLEVEL9K_DISABLE_HOT_RELOAD=true
 
