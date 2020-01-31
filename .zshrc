@@ -25,6 +25,7 @@ zinit snippet PZT::modules/environment/init.zsh
 zinit snippet PZT::modules/history/init.zsh
 zinit snippet PZT::modules/python/init.zsh
 zinit snippet PZT::modules/utility/init.zsh
+zinit snippet OMZ::lib/key-bindings.zsh
 
 zinit ice wait"0" lucid
 zinit load ael-code/zsh-colored-man-pages
