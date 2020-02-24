@@ -1,15 +1,15 @@
 # -*- mode: shell-script -*-
 # vim:ft=zsh
 
+### ZSH Module
+if [[ -s "$HOME/.zinit/bin/zmodules/Src/zdharma/zplugin.so" ]]; then
+  module_path+=( "$HOME/.zinit/bin/zmodules/Src" )
+  zmodload zdharma/zplugin
+fi
+
 source "$HOME/.zinit/bin/zinit.zsh"
 autoload -Uz _zinit
 (( ${+_comps} )) && _comps[zinit]=_zinit
-
-### ZSH Module
-if [[ -s "$HOME/.zinit/bin/zmodules/Src/zdharma/zinit.so" ]]; then
-  module_path+=( "$HOME/.zinit/bin/zmodules/Src" )
-  zmodload zdharma/zinit
-fi
 
 zinit load zinit-zsh/z-a-bin-gem-node
 
@@ -50,8 +50,8 @@ zinit ice wait'1' lucid; zinit load lukechilds/zsh-better-npm-completion
 
 zinit ice aliases blockf; zinit load _local/mine
 
-zinit ice wait'!' nocd atload'!source ~/.p10k.zsh; _p9k_precmd' lucid
-zinit load Meroje/powerlevel10k
+zinit ice wait'!' nocd atload'!source ~/.p10k.zsh; _p9k_precmd' wrap-track'_p9k_precmd' lucid
+zinit load romkatv/powerlevel10k
 
 zinit ice wait'0' lucid blockf atpull'zinit creinstall -q .' lucid
 zinit load zsh-users/zsh-completions
