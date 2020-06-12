@@ -50,6 +50,7 @@ zinit ice wait'1' lucid; zinit load lukechilds/zsh-better-npm-completion
 
 zinit ice aliases blockf; zinit load _local/mine
 
+zinit env-whitelist 'P9K_*'
 zinit ice wait'!' nocd atload'!source ~/.p10k.zsh; _p9k_precmd' wrap-track'_p9k_precmd' lucid
 zinit load romkatv/powerlevel10k
 
