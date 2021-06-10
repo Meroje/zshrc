@@ -33,7 +33,7 @@ export GOSUMDB=sum.golang.org
 #
 
 # Ensure path arrays do not contain duplicates.
-typeset -gU cdpath fpath mailpath path
+typeset -gU cdpath fpath mailpath path infopath manpath
 
 # Set the the list of directories that cd searches.
 cdpath=(
@@ -71,6 +71,11 @@ manpath=(
 )
 # ZSH doesn't do this automatically, it does fill from $manpath though
 export MANPATH
+
+infopath=(
+  /usr/local/share/info
+  $infopath
+)
 
 #
 # Temporary Files
@@ -128,3 +133,6 @@ export CLICOLOR=true
 #export ZSH_AUTOSUGGEST_STRATEGY=(completion match_prev_cmd history)
 export ZSH_AUTOSUGGEST_USE_ASYNC=true
 export ZSH_AUTOSUGGEST_MANUAL_REBIND=true
+
+# ripgrep
+export RIPGREP_CONFIG_PATH=$XDG_CONFIG_HOME/ripgrep/config

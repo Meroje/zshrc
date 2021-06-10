@@ -33,7 +33,7 @@ zinit load ael-code/zsh-colored-man-pages
 #zinit ice wait'1' has'thefuck' lucid aliases trackbinds atload'zstyle ":prezto:runcom" zpreztorc "$HOME/.zshrc"'
 #zinit load laggardkernel/zsh-thefuck
 
-zinit ice has'git' wait'1' lucid fbin"bin/git-dsf"; zinit load zdharma/zsh-diff-so-fancy
+zinit ice has'git' wait'1' lucid; zinit load zdharma/zsh-diff-so-fancy
 zinit ice has'git' wait'1' lucid; zinit load wfxr/forgit
 zinit ice has'git' wait'1' lucid; zinit load romkatv/gitstatus
 
