@@ -37,6 +37,9 @@ compdef _rsync rsync-copy=rsync rsync-move=rsync rsync-synchronize=rsync rsync-u
 if [ $+commands[kubectl] ]; then
   source <(kubectl completion zsh)
 fi
+if [ $+commands[eksctl] ]; then
+  source <(eksctl completion zsh)
+fi
 if [ $+commands[kops] ]; then
   source <(kops completion zsh)
 fi
@@ -47,3 +50,4 @@ if [ $+commands[vault] ]; then
   autoload -U +X bashcompinit && bashcompinit
   complete -o nospace -C /usr/local/bin/vault vault
 fi
+
