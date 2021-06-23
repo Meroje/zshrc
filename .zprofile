@@ -136,3 +136,6 @@ export ZSH_AUTOSUGGEST_MANUAL_REBIND=true
 
 # ripgrep
 export RIPGREP_CONFIG_PATH=$XDG_CONFIG_HOME/ripgrep/config
+
+# hashicorp telemetry
+export CHECKPOINT_DISABLE=1
