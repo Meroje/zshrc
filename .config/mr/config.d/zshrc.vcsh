@@ -3,5 +3,5 @@ checkout = vcsh clone git@github.com:Meroje/dotfiles/zshrc.git
 order = 10
 
 [$HOME/.zinit/bin]
-checkout = git clone 'https://github.com/zdharma/zinit.git' 'bin'
+checkout = git clone 'https://github.com/zdharma-continuum/zinit.git' 'bin'
 order = 20

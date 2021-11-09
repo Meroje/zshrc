@@ -33,7 +33,7 @@ zinit load ael-code/zsh-colored-man-pages
 #zinit ice wait'1' has'thefuck' lucid aliases trackbinds atload'zstyle ":prezto:runcom" zpreztorc "$HOME/.zshrc"'
 #zinit load laggardkernel/zsh-thefuck
 
-zinit ice has'git' wait'1' lucid; zinit load zdharma/zsh-diff-so-fancy
+zinit ice has'git' wait'1' lucid; zinit load zdharma-continuum/zsh-diff-so-fancy
 zinit ice has'git' wait'1' lucid; zinit load wfxr/forgit
 zinit ice has'git' wait'1' lucid; zinit load romkatv/gitstatus
 
@@ -61,10 +61,10 @@ zinit ice wait'1' lucid compile'{src/*.zsh,src/strategies/*}' atload'!_zsh_autos
 zinit load zsh-users/zsh-autosuggestions
 
 zinit ice atinit'zpcompinit; zpcdreplay' wait'1c' lucid
-zinit load zdharma/fast-syntax-highlighting
+zinit load zdharma-continuum/fast-syntax-highlighting
 
 zinit ice wait'0' lucid
-zinit load zdharma/history-search-multi-word
+zinit load zdharma-continuum/history-search-multi-word
 
 if [[ -r "$HOME/.zshrc.local" ]]; then
   source "$HOME/.zshrc.local"
