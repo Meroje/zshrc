@@ -50,4 +50,13 @@ if [ $+commands[vault] ]; then
   autoload -U +X bashcompinit && bashcompinit
   complete -o nospace -C /usr/local/bin/vault vault
 fi
-
+if [ -e /usr/local/opt/curl/bin/curl ]; then
+    path=(
+        /usr/local/opt/curl/bin
+        $path
+    )
+    manpath=(
+        /usr/local/opt/curl/share/man
+        $manpath
+    )
+fi
