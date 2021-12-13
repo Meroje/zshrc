@@ -11,7 +11,7 @@ source "$HOME/.zinit/bin/zinit.zsh"
 autoload -Uz _zinit
 (( ${+_comps} )) && _comps[zinit]=_zinit
 
-zinit load zinit-zsh/z-a-bin-gem-node
+zinit load zdharma-continuum/z-a-bin-gem-node
 
 zinit ice from"gh-r" fbin"fzf"; zinit load junegunn/fzf-bin
 zinit ice wait"0" silent trackbinds multisrc"shell/{completion,key-bindings}.zsh" id-as"junegunn/fzf_completions"
