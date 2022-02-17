@@ -1,13 +1,15 @@
 # -*- mode: shell-script -*-
 # vim:ft=zsh
 
+ZINIT_HOME="${XDG_DATA_HOME:-${HOME}/.local/share}/zinit/zinit.git"
+
 ### ZSH Module
-if [[ -s "$HOME/.zinit/bin/zmodules/Src/zdharma/zplugin.so" ]]; then
-  module_path+=( "$HOME/.zinit/bin/zmodules/Src" )
-  zmodload zdharma/zplugin
+if [[ -e "$ZINIT_HOME/../module/Src/zdharma_continuum/zinit.bundle" ]]; then
+  module_path+=( "$ZINIT_HOME/../module/Src" )
+  zmodload zdharma_continuum/zinit
 fi
 
-source "$HOME/.zinit/bin/zinit.zsh"
+source "${ZINIT_HOME}/zinit.zsh"
 autoload -Uz _zinit
 (( ${+_comps} )) && _comps[zinit]=_zinit
 
@@ -60,7 +62,7 @@ zinit load zsh-users/zsh-completions
 zinit ice wait'1' lucid compile'{src/*.zsh,src/strategies/*}' atload'!_zsh_autosuggest_start' lucid
 zinit load zsh-users/zsh-autosuggestions
 
-zinit ice atinit'zpcompinit; zpcdreplay' wait'1c' lucid
+zinit ice atinit'zicompinit; zicdreplay' wait'1c' lucid
 zinit load zdharma-continuum/fast-syntax-highlighting
 
 zinit ice wait'0' lucid
