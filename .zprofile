@@ -1,3 +1,14 @@
+# Bring in the default PATH from /etc/paths /etc/paths.d
+[[ -x /usr/libexec/path_helper ]] && eval $(/usr/libexec/path_helper -s)
+
+export HOMEBREW_INSTALL_FROM_API=1
+if [[ $(arch) = "arm64" ]]; then
+    eval $(/opt/homebrew/bin/brew shellenv)
+fi
+if [[ $(arch) = "i386" ]]; then
+    eval $(//usr/local/bin/brew shellenv)
+fi
+
 # Linux shim
 export XDG_CONFIG_HOME="${XDG_CONFIG_HOME:-$HOME/.config}"
 export XDG_DATA_HOME="${XDG_DATA_HOME:-$HOME/.local/share}"
@@ -37,9 +48,6 @@ cdpath=(
   $cdpath
 )
 
-# Bring in the default PATH from /etc/paths /etc/paths.d
-[[ -x /usr/libexec/path_helper ]] && eval $(/usr/libexec/path_helper -s)
-
 # Set the list of directories that Zsh searches for programs.
 path=(
   "$HOME/bin"
@@ -52,15 +60,16 @@ path=(
   "$HOME/.cargo/bin"
   "$HOME/.jsvu"
   "$GOPATH/bin" "$GOROOT/bin"
+  "$HOME/Library/Python/3.10/bin"
   "$([[ -x /usr/libexec/java_home ]] && /usr/libexec/java_home -F 2>/dev/null)"
 # "$(gem env gemdir)/bin"
-  /usr/local/{bin,sbin}
+# /usr/local/{bin,sbin}
   $path
 )
 
 manpath=(
   $HOME/man
-  /usr/local/share/man # Homebrew
+# /usr/local/share/man # Homebrew
   /usr/local/opt/erlang/lib/erlang/man # erlang
   /opt/X11/share/man
   $manpath # Other setup files
@@ -70,7 +79,7 @@ manpath=(
 export MANPATH
 
 infopath=(
-  /usr/local/share/info
+# /usr/local/share/info # Homebrew
   $infopath
 )
 
@@ -136,3 +145,7 @@ export RIPGREP_CONFIG_PATH=$XDG_CONFIG_HOME/ripgrep/config
 
 # hashicorp telemetry
 export CHECKPOINT_DISABLE=1
+
+
+# Added by Toolbox App
+export PATH="$PATH:/Users/jforay/Library/Application Support/JetBrains/Toolbox/scripts"
