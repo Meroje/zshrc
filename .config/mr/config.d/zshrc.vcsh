@@ -2,6 +2,6 @@
 checkout = vcsh clone git@github.com:Meroje/dotfiles/zshrc.git
 order = 10
 
+
 [$HOME/.local/share/zinit/zinit.git]
-checkout = git clone 'https://github.com/zdharma-continuum/zinit.git' 'bin'
-order = 20
+checkout = git clone 'https://github.com/zdharma-continuum/zinit.git' 'zinit.git'
