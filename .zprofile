@@ -6,13 +6,14 @@ if [[ $(arch) = "arm64" ]]; then
     eval $(/opt/homebrew/bin/brew shellenv)
 fi
 if [[ $(arch) = "i386" ]]; then
-    eval $(//usr/local/bin/brew shellenv)
+    eval $(/usr/local/bin/brew shellenv)
 fi
 
 # Linux shim
 export XDG_CONFIG_HOME="${XDG_CONFIG_HOME:-$HOME/.config}"
 export XDG_DATA_HOME="${XDG_DATA_HOME:-$HOME/.local/share}"
 export XDG_CACHE_HOME="${XDG_CACHE_HOME:-$HOME/.cache}"
+export XDG_STATE_HOME="${XDG_STATE_HOME:-$HOME/.local/state}"
 
 #
 # Locale
@@ -34,6 +35,7 @@ export PAGER='less'
 # Golang
 #
 export GOPATH=$HOME/go
+export GOTRACEBACK=all
 
 #
 # Paths
@@ -48,6 +50,11 @@ cdpath=(
   $cdpath
 )
 
+fpath=(
+  "${XDG_DATA_HOME:-$HOME/.local/share}/zsh/site-functions"
+  $fpath
+)
+
 # Set the list of directories that Zsh searches for programs.
 path=(
   "$HOME/bin"
@@ -59,7 +66,10 @@ path=(
   "$HOME/.cabal/bin"
   "$HOME/.cargo/bin"
   "$HOME/.jsvu"
-  "$GOPATH/bin" "$GOROOT/bin"
+  "$GOPATH/bin" "$GOPATH/bin/darwin_amd64" "$HOMEBREW_PREFIX/opt/go/libexec/bin" "$HOMEBREW_PREFIX/opt/go/libexec/misc/wasm"
+  "$HOME/Library/Python/3.13/bin"
+  "$HOME/Library/Python/3.12/bin"
+  "$HOME/Library/Python/3.11/bin"
   "$HOME/Library/Python/3.10/bin"
   "$([[ -x /usr/libexec/java_home ]] && /usr/libexec/java_home -F 2>/dev/null)"
 # "$(gem env gemdir)/bin"
@@ -69,7 +79,7 @@ path=(
 
 manpath=(
   $HOME/man
-# /usr/local/share/man # Homebrew
+  $HOMEBREW_PREFIX/share/man # Homebrew
   /usr/local/opt/erlang/lib/erlang/man # erlang
   /opt/X11/share/man
   $manpath # Other setup files
@@ -82,6 +92,8 @@ infopath=(
 # /usr/local/share/info # Homebrew
   $infopath
 )
+
+export GROOVY_HOME="$HOMEBREW_PREFIX/opt/groovy/libexec"
 
 #
 # Temporary Files
@@ -146,6 +158,5 @@ export RIPGREP_CONFIG_PATH=$XDG_CONFIG_HOME/ripgrep/config
 # hashicorp telemetry
 export CHECKPOINT_DISABLE=1
 
-
-# Added by Toolbox App
-export PATH="$PATH:/Users/jforay/Library/Application Support/JetBrains/Toolbox/scripts"
+# Added by OrbStack: command-line tools and integration
+source ~/.orbstack/shell/init.zsh 2>/dev/null || :

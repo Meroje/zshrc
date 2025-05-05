@@ -4,13 +4,15 @@
 0="${${ZERO:-${0:#$ZSH_ARGZERO}}:-${(%):-%N}}"
 0="${${(M)0:#/*}:-$PWD/$0}"
 
+fpath+="${0:A:h}"
+
 setopt promptsubst complete_aliases
 
 autoload run-help
 
 if (( $+commands[pipenv] )); then
   _pipenv() {
-    eval $(env COMMANDLINE="${words[1,$CURRENT]}" _PIPENV_COMPLETE=complete-zsh  pipenv)
+    eval $(env COMMANDLINE="${words[1,$CURRENT]}" _PIPENV_COMPLETE=complete-zsh pipenv)
   }
   compdef _pipenv pipenv
 fi
@@ -46,6 +48,9 @@ fi
 if (( $+commands[helm] )); then
   source <(helm completion zsh)
 fi
+if (( $+commands[pkgx] )); then
+  source <(pkgx dev --shellcode)
+fi
 if (( $+commands[vault] )); then
   autoload -U +X bashcompinit && bashcompinit
   complete -o nospace -C /usr/local/bin/vault vault
@@ -64,4 +69,6 @@ if [ -f /usr/local/opt/switch/switch.sh ]; then
     source /usr/local/opt/switch/switch.sh
     alias kubectx=switch
 fi
-
+if [ -f ~/.local/share/tinted-theming/tinty/repos/fzf/ansi/ansi.sh ]; then
+    source ~/.local/share/tinted-theming/tinty/repos/fzf/ansi/ansi.sh
+fi

@@ -13,7 +13,8 @@ source "${ZINIT_HOME}/zinit.zsh"
 autoload -Uz _zinit
 (( ${+_comps} )) && _comps[zinit]=_zinit
 
-zinit load zdharma-continuum/z-a-bin-gem-node
+zinit light-mode for \
+  zdharma-continuum/zinit-annex-{'readurl','bin-gem-node','patch-dl','rust'}
 
 zinit ice from"gh-r" fbin"fzf"; zinit load junegunn/fzf-bin
 zinit ice wait"0" silent trackbinds multisrc"shell/{completion,key-bindings}.zsh" id-as"junegunn/fzf_completions"
@@ -41,9 +42,10 @@ zinit ice has'git' wait'1' lucid; zinit load romkatv/gitstatus
 
 zinit ice wait'0' lucid svn has'terraform' as"completion" atpull'zinit creinstall -q .'; zinit snippet OMZ::plugins/terraform
 zinit ice wait'0' lucid has'docker' as"completion" atpull'zinit creinstall -q .'; zinit snippet https://github.com/docker/cli/blob/master/contrib/completion/zsh/_docker
-zinit ice wait'0' lucid has'docker-compose' as"completion" atpull'zinit creinstall -q .'; zinit snippet https://github.com/docker/compose/blob/master/contrib/completion/zsh/_docker-compose
+zinit ice wait'0' lucid has'docker-compose' as"completion" atpull'zinit creinstall -q .'; zinit snippet https://github.com/docker/compose/blob/v1/contrib/completion/zsh/_docker-compose
 zinit ice wait'0' lucid blockf if'[[ -d /usr/local/Caskroom/google-cloud-sdk/latest/google-cloud-sdk ]]'; zinit snippet /usr/local/Caskroom/google-cloud-sdk/latest/google-cloud-sdk/completion.zsh.inc
-zinit ice wait'0' lucid if'[[ "$OSTYPE" = *darwin* ]]' atload'!iterm2_precmd'; zinit snippet https://iterm2.com/shell_integration/zsh
+zinit ice wait'0' lucid if'[[ "$OSTYPE" = *darwin* && "$TERM" != "xterm-kitty" ]]' atload'!iterm2_precmd'; zinit snippet https://iterm2.com/shell_integration/zsh
+zinit ice wait'0' lucid if'[[ "$OSTYPE" = *darwin* && "$TERM" == "xterm-kitty" ]]' atinit'export KITTY_SHELL_INTEGRATION="enabled"'; zinit snippet "$KITTY_INSTALLATION_DIR"/shell-integration/zsh/kitty.zsh
 
 zinit ice wait'1' lucid; zinit load hlissner/zsh-autopair
 
@@ -53,7 +55,7 @@ zinit ice wait'1' lucid; zinit load lukechilds/zsh-better-npm-completion
 zinit ice aliases blockf; zinit load _local/mine
 
 zinit env-whitelist 'P9K_*'
-zinit ice wait'!' nocd atload'!source ~/.p10k.zsh; _p9k_precmd' wrap-track'_p9k_precmd' lucid
+zinit ice wait'!0' nocd atload'!source ~/.p10k.zsh; _p9k_precmd' wrap'_p9k_precmd' lucid
 zinit load romkatv/powerlevel10k
 
 zinit ice wait'0' lucid blockf atpull'zinit creinstall -q .' lucid
