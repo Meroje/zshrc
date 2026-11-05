@@ -30,7 +30,6 @@ export GIT_EDITOR="${EDITOR}"
 export VISUAL='subl -w'
 export PAGER='less'
 
-
 #
 # Golang
 #
@@ -65,6 +64,7 @@ path=(
   "$HOME/.cargo/vendor/bin"
   "$HOME/.cabal/bin"
   "$HOME/.cargo/bin"
+  "$HOME/.bun/bin"
   "$HOME/.jsvu"
   "$GOPATH/bin" "$GOPATH/bin/darwin_amd64" "$HOMEBREW_PREFIX/opt/go/libexec/bin" "$HOMEBREW_PREFIX/opt/go/libexec/misc/wasm"
   "$HOME/Library/Python/3.13/bin"
