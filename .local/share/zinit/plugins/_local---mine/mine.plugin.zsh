@@ -36,21 +36,7 @@ alias rsync-synchronize='rsync -avzu --delete --info=progress2 -h'
 alias rsync-update='rsync -avzu --info=progress2 -h'
 compdef _rsync rsync-copy=rsync rsync-move=rsync rsync-synchronize=rsync rsync-update=rsync
 
-if (( $+commands[kubectl] )); then
-  source <(kubectl completion zsh)
-fi
-if (( $+commands[eksctl] )); then
-  source <(eksctl completion zsh)
-fi
-if (( $+commands[kops] )); then
-  source <(kops completion zsh)
-fi
-if (( $+commands[helm] )); then
-  source <(helm completion zsh)
-fi
-if (( $+commands[pkgx] )); then
-  source <(pkgx dev --shellcode)
-fi
+# kubectl/eksctl/kops/helm/pkgx init: cached via _cached_source in ~/.zshrc
 if (( $+commands[vault] )); then
   autoload -U +X bashcompinit && bashcompinit
   complete -o nospace -C /usr/local/bin/vault vault

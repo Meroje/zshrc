@@ -52,6 +52,24 @@ zinit ice wait'1' lucid; zinit load hlissner/zsh-autopair
 zinit ice wait'1' lucid; zinit load lukechilds/zsh-nvm
 zinit ice wait'1' lucid; zinit load lukechilds/zsh-better-npm-completion
 
+# Cache slow "<tool> completion zsh" / shellcode output; regenerate when the binary is newer.
+_cached_source() {
+  local bin=$1; shift
+  (( $+commands[$bin] )) || return 0
+  local dir=${XDG_CACHE_HOME:-$HOME/.cache}/zsh-eval f
+  f=$dir/${bin}-${(j:-:)@// /_}.zsh
+  if [[ ! -s $f || $commands[$bin] -nt $f ]]; then
+    mkdir -p $dir
+    command $bin "$@" >| $f.tmp 2>/dev/null && [[ -s $f.tmp ]] && mv $f.tmp $f || { rm -f $f.tmp; return 1 }
+  fi
+  source $f
+}
+zinit ice wait'0' lucid has'kubectl' atload'_cached_source kubectl completion zsh'; zinit load zdharma-continuum/null
+zinit ice wait'0' lucid has'eksctl' atload'_cached_source eksctl completion zsh'; zinit load zdharma-continuum/null
+zinit ice wait'0' lucid has'kops' atload'_cached_source kops completion zsh'; zinit load zdharma-continuum/null
+zinit ice wait'0' lucid has'helm' atload'_cached_source helm completion zsh'; zinit load zdharma-continuum/null
+zinit ice wait'0' lucid has'pkgx' atload'_cached_source pkgx dev --shellcode'; zinit load zdharma-continuum/null
+
 zinit ice aliases blockf; zinit load _local/mine
 
 zinit env-whitelist 'P9K_*'
@@ -74,3 +92,24 @@ if [[ -r "$HOME/.zshrc.local" ]]; then
   source "$HOME/.zshrc.local"
 fi
 
+
+# The next line updates PATH for the Google Cloud SDK.
+if [ -f '/opt/homebrew/share/google-cloud-sdk/path.zsh.inc' ]; then . '/opt/homebrew/share/google-cloud-sdk/path.zsh.inc'; fi
+
+# The next line enables shell command completion for gcloud.
+if [ -f '/opt/homebrew/share/google-cloud-sdk/completion.zsh.inc' ]; then . '/opt/homebrew/share/google-cloud-sdk/completion.zsh.inc'; fi
+
+# Added by Antigravity
+export PATH="$HOME/.antigravity/antigravity/bin:$PATH"
+
+
+if command -v wt >/dev/null 2>&1; then eval "$(command wt config shell init zsh)"; fi
+
+# >>> headroom persistent env >>>
+export HEADROOM_PORT="8787"
+export HEADROOM_HOST="127.0.0.1"
+export HEADROOM_MODE="token"
+export HEADROOM_BACKEND="bedrock"
+export HEADROOM_REGION="eu"
+export HEADROOM_TELEMETRY="off"
+# <<< headroom persistent env <<<
